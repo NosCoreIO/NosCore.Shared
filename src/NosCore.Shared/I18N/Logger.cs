@@ -14,13 +14,7 @@ namespace NosCore.Shared.I18N
 {
     public static class Logger
     {
-        private const string ConfigurationPath = "../../../configuration";
-
-        private static IConfigurationRoot _configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory() + ConfigurationPath)
-            .AddYamlFile("logger.yml", false)
-            .Build();
-
+        private static IConfigurationRoot? _configuration;
         private static readonly string[] AsciiTitle =
         {
             @" __  _  __    __   ___ __  ___ ___ ",
@@ -30,9 +24,10 @@ namespace NosCore.Shared.I18N
             @"-----------------------------------"
         };
 
-        public static void SetLoggerConfiguration(IConfigurationRoot configuration)
+        public static void Initialize(IConfigurationRoot configuration)
         {
             _configuration = configuration;
+            Log.Logger = GetLoggerConfiguration().CreateLogger();
         }
 
         public static LoggerConfiguration GetLoggerConfiguration()
@@ -42,8 +37,6 @@ namespace NosCore.Shared.I18N
 
         public static void PrintHeader(string text)
         {
-            Log.Logger = GetLoggerConfiguration().CreateLogger();
-
             var titleLogger = new LoggerConfiguration()
                 .WriteTo.Console(outputTemplate: "{Message:lj}{NewLine}")
                 .CreateLogger();
