@@ -6,7 +6,7 @@
 
 namespace NosCore.Shared.Enumerations
 {
-    public enum ReputationType : byte
+    public enum DignityType : byte
     {
         Default = 1,
         Dubious = 2,
