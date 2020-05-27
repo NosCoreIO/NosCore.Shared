@@ -64,10 +64,10 @@ namespace NosCore.Shared.Configuration
             string? path = null;
             if (pathIndex > -1 && args?.Length > pathIndex + 1)
             {
-                path = Path.IsPathRooted(args![pathIndex + 1]) ? args[pathIndex + 1] : Directory.GetCurrentDirectory() + args[pathIndex + 1];
+                path = Path.IsPathRooted(args![pathIndex + 1]) ? args[pathIndex + 1] : System.AppDomain.CurrentDomain.BaseDirectory + args[pathIndex + 1];
             }
             var conf = new ConfigurationBuilder()
-                .SetBasePath(path ?? Directory.GetCurrentDirectory() + ConfigurationPath);
+                .SetBasePath(path ?? System.AppDomain.CurrentDomain.BaseDirectory + ConfigurationPath);
             foreach (var fileName in fileNames ?? Array.Empty<string>())
             {
                 conf.AddYamlFile(fileName, false);
