@@ -18,7 +18,7 @@ namespace NosCore.Shared.Configuration
 {
     public class ConfiguratorBuilder
     {
-        private const string ConfigurationPath = "../../../configuration";
+        private const string ConfigurationPath = "../../configuration";
 
         private static IConfiguration ReplaceEnvironment(IConfiguration configuration, object strongTypedConfiguration)
         {
