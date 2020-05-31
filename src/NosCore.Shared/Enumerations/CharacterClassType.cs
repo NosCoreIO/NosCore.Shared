@@ -9,9 +9,9 @@ namespace NosCore.Shared.Enumerations
     public enum CharacterClassType : byte
     {
         Adventurer = 0,
-        Swordman = 1,
+        Swordsman = 1,
         Archer = 2,
-        Magician = 3,
+        Mage = 3,
         MartialArtist = 4
     }
 }
