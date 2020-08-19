@@ -17,8 +17,8 @@ namespace NosCore.Shared.Enumerations
         IT,
         PL,
         ES,
-        CS,
-        TR,
-        RU
+        RU,
+        CZ,
+        TR
     }
 }
