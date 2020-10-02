@@ -48,33 +48,25 @@ namespace NosCore.Shared.Configuration
             return configuration;
         }
 
-        private static void Configure(IConfiguration configuration, object strongTypedConfiguration)
-        {
-            if (configuration != null)
-            {
-                ReplaceEnvironment(configuration, strongTypedConfiguration).Bind(strongTypedConfiguration);
-            }
 
-            Validator.ValidateObject(strongTypedConfiguration, new ValidationContext(strongTypedConfiguration), true);
-        }
-
-        public static void InitializeConfiguration(string[] args, string[] fileNames, object strongTypedConfiguration)
+        public static IConfigurationRoot InitializeConfiguration(string[] args, string[] fileNames, object strongTypedConfiguration)
         {
             var pathIndex = Array.IndexOf(args!, "--config");
             string? path = null;
             if (pathIndex > -1 && args?.Length > pathIndex + 1)
             {
-                path = Path.IsPathRooted(args![pathIndex + 1]) ? args[pathIndex + 1] : System.AppDomain.CurrentDomain.BaseDirectory + args[pathIndex + 1];
+                path = Path.IsPathRooted(args![pathIndex + 1]) ? args[pathIndex + 1] : AppDomain.CurrentDomain.BaseDirectory + args[pathIndex + 1];
             }
             var conf = new ConfigurationBuilder()
-                .SetBasePath(path ?? System.AppDomain.CurrentDomain.BaseDirectory + ConfigurationPath);
-            foreach (var fileName in fileNames ?? Array.Empty<string>())
+                .SetBasePath(path ?? AppDomain.CurrentDomain.BaseDirectory + ConfigurationPath);
+            foreach (var fileName in fileNames)
             {
                 conf.AddYamlFile(fileName, false);
             }
-            var confBuild = conf.Build(); ;
+            var confBuild = conf.Build();
             Logger.Initialize(confBuild);
-            Configure(confBuild, strongTypedConfiguration);
+            ReplaceEnvironment(confBuild, strongTypedConfiguration);
+            return confBuild;
         }
     }
 }
