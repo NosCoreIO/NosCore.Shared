@@ -19,6 +19,7 @@
     <RepositoryType>git</RepositoryType>
     <Company>NosCore</Company>
     <PackageIcon>icon.png</PackageIcon>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
