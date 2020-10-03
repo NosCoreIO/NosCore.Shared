@@ -49,7 +49,7 @@ namespace NosCore.Shared.Configuration
         }
 
 
-        public static IConfigurationRoot InitializeConfiguration<T>(string[] args, string[] fileNames, T strongTypedConfiguration)
+        public static IConfigurationRoot InitializeConfiguration(string[] args, string[] fileNames)
         {
             var pathIndex = Array.IndexOf(args!, "--config");
             string? path = null;
@@ -65,7 +65,7 @@ namespace NosCore.Shared.Configuration
             }
             var confBuild = conf.Build();
             Logger.Initialize(confBuild);
-            ReplaceEnvironment(confBuild, strongTypedConfiguration).Bind(strongTypedConfiguration);
+            ReplaceEnvironment(confBuild, confBuild);
             return confBuild;
         }
     }
