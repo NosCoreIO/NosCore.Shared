@@ -20,7 +20,7 @@ namespace NosCore.Shared.Configuration
     {
         private const string ConfigurationPath = "../../configuration";
 
-        private static IConfiguration ReplaceEnvironment(IConfiguration configuration, object strongTypedConfiguration)
+        private static IConfiguration ReplaceEnvironment<T>(IConfiguration configuration, T strongTypedConfiguration)
         {
             var ses = configuration.GetChildren().ToList();
             for (var index = ses.Count; index > 0; index--)
@@ -49,7 +49,7 @@ namespace NosCore.Shared.Configuration
         }
 
 
-        public static IConfigurationRoot InitializeConfiguration(string[] args, string[] fileNames, object strongTypedConfiguration)
+        public static IConfigurationRoot InitializeConfiguration<T>(string[] args, string[] fileNames, T strongTypedConfiguration)
         {
             var pathIndex = Array.IndexOf(args!, "--config");
             string? path = null;
@@ -65,7 +65,7 @@ namespace NosCore.Shared.Configuration
             }
             var confBuild = conf.Build();
             Logger.Initialize(confBuild);
-            ReplaceEnvironment(confBuild, strongTypedConfiguration);
+            ReplaceEnvironment(confBuild, strongTypedConfiguration).Bind(strongTypedConfiguration);
             return confBuild;
         }
     }
