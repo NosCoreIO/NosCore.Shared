@@ -13,8 +13,8 @@ namespace NosCore.Shared.Configuration
         [Required]
         public string? Host { get; set; }
 
-        [Range(1, int.MaxValue)]
-        public int Port { get; set; }
+        [Range(1, ushort.MaxValue)]
+        public ushort Port { get; set; }
 
         [Required]
 
