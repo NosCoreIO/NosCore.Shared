@@ -1,13 +1,17 @@
-﻿#if NET5
+﻿
 using System;
 using System.Text;
+#if NET5_0 || NET5
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+#endif
+using Microsoft.Extensions.Options;
 using NosCore.Shared.Configuration;
 
 namespace NosCore.Shared.Authentication
 {
+
+#if NET5_0 || NET5
     public class ConfigureJwtBearerOptions : IConfigureNamedOptions<JwtBearerOptions>
     {
         private readonly IOptions<WebApiConfiguration> _webApiConfiguration;
@@ -49,5 +53,5 @@ namespace NosCore.Shared.Authentication
             Configure(JwtBearerDefaults.AuthenticationScheme, options);
         }
     }
-}
 #endif
+}
