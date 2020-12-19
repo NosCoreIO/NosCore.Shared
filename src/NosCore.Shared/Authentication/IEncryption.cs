@@ -1,8 +1,8 @@
 ﻿namespace NosCore.Shared.Authentication
 {
-    public interface IEncryption
+    public interface IHasher
     {
-        string Encrypt(string password, string? salt);
-        string Encrypt(string password);
+        string Hash(string password, string? salt);
+        string Hash(string password);
     }
 }

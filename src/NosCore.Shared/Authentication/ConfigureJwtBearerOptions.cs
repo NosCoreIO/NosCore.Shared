@@ -15,9 +15,9 @@ namespace NosCore.Shared.Authentication
     public class ConfigureJwtBearerOptions : IConfigureNamedOptions<JwtBearerOptions>
     {
         private readonly IOptions<WebApiConfiguration> _webApiConfiguration;
-        private readonly IEncryption _encryption;
+        private readonly IHasher _encryption;
 
-        public ConfigureJwtBearerOptions(IOptions<WebApiConfiguration> webApiConfiguration, IEncryption encryption)
+        public ConfigureJwtBearerOptions(IOptions<WebApiConfiguration> webApiConfiguration, IHasher encryption)
         {
             _webApiConfiguration = webApiConfiguration;
             _encryption = encryption;
@@ -30,7 +30,7 @@ namespace NosCore.Shared.Authentication
                 throw new ArgumentNullException(nameof(options));
             }
 
-            var password = _encryption.Encrypt(_webApiConfiguration.Value.Password!, _webApiConfiguration.Value.Salt);
+            var password = _encryption.Hash(_webApiConfiguration.Value.Password!, _webApiConfiguration.Value.Salt);
             if (name != JwtBearerDefaults.AuthenticationScheme)
             {
                 return;
