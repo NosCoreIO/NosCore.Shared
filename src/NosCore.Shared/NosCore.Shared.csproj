@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net6.0;netstandard2.1</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -12,7 +12,7 @@
     <RepositoryUrl>https://github.com/NosCoreIO/NosCore.Dao.git</RepositoryUrl>
     <PackageIconUrl></PackageIconUrl>
     <PackageTags>nostale, noscore, nostale private server source, nostale emulator</PackageTags>
-    <Version>1.14.4</Version>
+    <Version>1.14.2</Version>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Description>NosCore's Shared Components</Description>
     <PackageLicenseExpression></PackageLicenseExpression>
@@ -27,10 +27,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="5.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="6.0.0" />
     <PackageReference Include="NetEscapades.Configuration.Yaml" Version="2.1.0" />
     <PackageReference Include="Serilog" Version="2.10.0" />
-    <PackageReference Include="Serilog.Settings.Configuration" Version="3.2.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
@@ -42,9 +42,9 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer">
-      <Version>5.0.9</Version>
+      <Version>6.0.0</Version>
     </PackageReference>
   </ItemGroup>
 </Project>
