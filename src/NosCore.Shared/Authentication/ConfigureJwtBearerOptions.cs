@@ -1,7 +1,7 @@
 ﻿
 using System;
 using System.Text;
-#if NET5_0 || NET5
+#if NET6_0 || NET6
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 #endif
@@ -11,7 +11,7 @@ using NosCore.Shared.Configuration;
 namespace NosCore.Shared.Authentication
 {
 
-#if NET5_0 || NET5
+#if NET6_0 || NET6
     public class ConfigureJwtBearerOptions : IConfigureNamedOptions<JwtBearerOptions>
     {
         private readonly IOptions<WebApiConfiguration> _webApiConfiguration;
