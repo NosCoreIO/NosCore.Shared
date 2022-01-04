@@ -1,17 +1,19 @@
-﻿
+﻿//  __  _  __    __   ___ __  ___ ___
+// |  \| |/__\ /' _/ / _//__\| _ \ __|
+// | | ' | \/ |`._`.| \_| \/ | v / _|
+// |_|\__|\__/ |___/ \__/\__/|_|_\___|
+// -----------------------------------
+
 using System;
 using System.Text;
-#if NET6_0 || NET6
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-#endif
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using NosCore.Shared.Configuration;
 
 namespace NosCore.Shared.Authentication
 {
-
-#if NET6_0 || NET6
+    
     public class ConfigureJwtBearerOptions : IConfigureNamedOptions<JwtBearerOptions>
     {
         private readonly IOptions<WebApiConfiguration> _webApiConfiguration;
@@ -53,5 +55,4 @@ namespace NosCore.Shared.Authentication
             Configure(JwtBearerDefaults.AuthenticationScheme, options);
         }
     }
-#endif
 }

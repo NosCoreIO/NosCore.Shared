@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Localization;
-using NosCore.Data.Resource;
+﻿//  __  _  __    __   ___ __  ___ ___
+// |  \| |/__\ /' _/ / _//__\| _ \ __|
+// | | ' | \/ |`._`.| \_| \/ | v / _|
+// |_|\__|\__/ |___/ \__/\__/|_|_\___|
+// -----------------------------------
 
-namespace NosCore.Core.I18N
+using System;
+using System.Collections.Generic;
+using Microsoft.Extensions.Localization;
+
+namespace NosCore.Shared.I18N
 {
     public class LogLanguageLocalizer<T, T2> : ILogLanguageLocalizer<T> where T : struct, Enum
     {
