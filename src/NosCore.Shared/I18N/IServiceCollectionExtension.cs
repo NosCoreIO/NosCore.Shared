@@ -25,7 +25,7 @@ public static class IServiceCollectionExtension
     }
     public static IServiceCollection AddI18NLogs(this IServiceCollection services)
     {
-        LoadReferencedAssembly(Assembly.GetExecutingAssembly());
+        LoadReferencedAssembly(Assembly.GetCallingAssembly());
         var types = AppDomain.CurrentDomain.GetAssemblies().Where(x => x.FullName?.Contains(nameof(NosCore)) ?? false)
             .SelectMany(x => x.GetTypes())
             .Where(t => t.IsEnum && t.IsPublic && t.Name == "LogLanguageKey")
