@@ -6,15 +6,28 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace NosCore.Shared.I18N;
 
 public static class IServiceCollectionExtension
 {
+    private static void LoadReferencedAssembly(Assembly assembly)
+    {
+        foreach (var name in assembly.GetReferencedAssemblies().Where(x=>x.Name?.Contains(nameof(NosCore)) ?? false))
+        {
+            if (AppDomain.CurrentDomain.GetAssemblies().All(a => a.FullName != name.FullName))
+            {
+                LoadReferencedAssembly(Assembly.Load(name));
+            }
+        }
+    }
     public static IServiceCollection AddI18NLogs(this IServiceCollection services)
     {
-        var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+        LoadReferencedAssembly(Assembly.GetExecutingAssembly());
+        var types = AppDomain.CurrentDomain.GetAssemblies().Where(x => x.FullName?.Contains(nameof(NosCore)) ?? false)
+            .SelectMany(x => x.GetTypes())
             .Where(t => t.IsEnum && t.IsPublic && t.Name == "LogLanguageKey")
             .ToList();
 
