@@ -22,9 +22,9 @@ namespace NosCore.Shared.I18N
 
         public static IEnumerable<string> GetUselessTranslations(ILogLanguageLocalizer localizer, List<string> keys)
         {
-            return localizer.GetAllStrings(false)
+            return localizer.GetAllStrings()
                 .Where(resourceKey => !keys.Contains(resourceKey.Name))
-                .Select(translation => translation.Value);
+                .Select(translation => translation.Name);
         }
 
         public static IEnumerable<T> GetUselessLanguageKeys<T>()

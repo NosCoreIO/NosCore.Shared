@@ -18,5 +18,5 @@ public interface ILogLanguageLocalizer<T> : ILogLanguageLocalizer where T : stru
 
 public interface ILogLanguageLocalizer
 {
-    IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures);
+    IEnumerable<LocalizedString> GetAllStrings();
 }

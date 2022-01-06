@@ -6,7 +6,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Microsoft.Extensions.Localization;
+using NosCore.Shared.Enumerations;
 
 namespace NosCore.Shared.I18N
 {
@@ -37,7 +39,7 @@ namespace NosCore.Shared.I18N
             }
         }
 
-        public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures) =>
-            _stringLocalizer.GetAllStrings(includeParentCultures);
+        public IEnumerable<LocalizedString> GetAllStrings() =>
+            _stringLocalizer.GetAllStrings(CultureInfo.CurrentUICulture.Equals(new CultureInfo(RegionType.EN.ToString())));
     }
 }
