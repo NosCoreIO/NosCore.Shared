@@ -10,9 +10,13 @@ using Microsoft.Extensions.Localization;
 
 namespace NosCore.Shared.I18N;
 
-public interface ILogLanguageLocalizer<T> where T : struct, Enum
+public interface ILogLanguageLocalizer<T> : ILogLanguageLocalizer where T : struct, Enum
 {
     LocalizedString this[T key, params object[] arguments] { get; }
     LocalizedString this[T key] { get; }
+}
+
+public interface ILogLanguageLocalizer
+{
     IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures);
 }
