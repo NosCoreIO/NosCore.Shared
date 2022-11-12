@@ -28,7 +28,7 @@ namespace NosCore.Shared.Configuration
                 if (ses[index - 1].Value != null)
                 {
                     var regexp = new Regex(@"\${(?<variable>[a-zA-Z_]+)\s*,?\s*(?<fallback>[^}]+)}");
-                    var matches = regexp.Matches(ses[index - 1].Value);
+                    var matches = regexp.Matches(ses[index - 1].Value ?? "");
                     foreach (var match in matches.ToList())
                     {
                         var value = Environment.GetEnvironmentVariable(match.Groups[1].Value);
@@ -36,7 +36,7 @@ namespace NosCore.Shared.Configuration
                         {
                             value ??= match.Groups[2].Value;
                         }
-                        ses[index - 1].Value = regexp.Replace(ses[index - 1].Value, value!, 1);
+                        ses[index - 1].Value = regexp.Replace(ses[index - 1].Value ?? "", value!, 1);
                     }
                 }
                 else if (ses[index - 1].GetChildren().Any())

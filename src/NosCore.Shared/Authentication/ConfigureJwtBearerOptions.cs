@@ -25,7 +25,7 @@ namespace NosCore.Shared.Authentication
             _encryption = encryption;
         }
 
-        public void Configure(string name, JwtBearerOptions options)
+        public void Configure(string? name, JwtBearerOptions options)
         {
             if (options == null)
             {
