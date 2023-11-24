@@ -32,7 +32,7 @@ namespace NosCore.Shared.I18N
 
         public static LoggerConfiguration GetLoggerConfiguration()
         {
-            return new LoggerConfiguration().ReadFrom.Configuration(_configuration);
+            return new LoggerConfiguration().ReadFrom.Configuration(_configuration!);
         }
 
         public static void PrintHeader(string text)
