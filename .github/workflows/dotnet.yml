@@ -47,7 +47,7 @@ jobs:
       id: latest_release_info
       uses: jossef/action-latest-release-info@v1.1.0
       env:
-        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        GITHUB_TOKEN: ${{ github.token }}
         
     - name: Upload Release Asset
       if: steps.check-tag.outputs.match == 'true'
