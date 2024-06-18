@@ -1,7 +1,7 @@
 # NosCore.Shared #
 
 <p align="center">
-  <img src="https://cdn.discordapp.com/attachments/319565884454731795/426892646288457728/N2.png"/>
+  <img src="https://github.com/NosCoreIO/NosCore.Shared/blob/master/icon.png"/>
 </p>
 
 [![NuGet](https://img.shields.io/nuget/v/NosCore.Shared.svg?style=flat-square)](https://www.nuget.org/packages/NosCore.Shared/)
