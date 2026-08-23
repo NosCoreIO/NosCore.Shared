@@ -14,6 +14,8 @@ namespace NosCore.Shared.I18N
 {
     public static class Logger
     {
+        private const int HeadlessWindowWidth = 21;
+
         private static IConfigurationRoot? _configuration;
         private static readonly string[] AsciiTitle =
         {
@@ -40,16 +42,29 @@ namespace NosCore.Shared.I18N
             var titleLogger = new LoggerConfiguration()
                 .WriteTo.Console(outputTemplate: "{Message:lj}{NewLine}")
                 .CreateLogger();
-            var offset = Console.WindowWidth / 2 + text?.Length / 2;
-            var separator = new string('=', Console.WindowHeight > 0 ? Console.WindowWidth - 1 : 20);
+            var width = GetWindowWidth();
+            var offset = width / 2 + text?.Length / 2;
+            var separator = new string('=', width - 1);
             titleLogger.Information(separator);
             foreach (var s in AsciiTitle)
             {
-                titleLogger.Information(string.Format(CultureInfo.CurrentCulture, "{0," + (Console.WindowWidth / 2 + s.Length / 2) + "}", s));
+                titleLogger.Information(string.Format(CultureInfo.CurrentCulture, "{0," + (width / 2 + s.Length / 2) + "}", s));
             }
 
             titleLogger.Information(string.Format(CultureInfo.CurrentCulture, "{0," + offset + "}", text));
             titleLogger.Information(separator);
+        }
+
+        private static int GetWindowWidth()
+        {
+            try
+            {
+                return Console.WindowHeight > 0 ? Console.WindowWidth : HeadlessWindowWidth;
+            }
+            catch (IOException)
+            {
+                return HeadlessWindowWidth;
+            }
         }
     }
 }
