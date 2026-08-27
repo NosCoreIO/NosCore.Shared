@@ -6,8 +6,8 @@
 
 using System;
 using System.Globalization;
-using System.IO;
 using Microsoft.Extensions.Configuration;
+using NosCore.Shared.Helpers;
 using Serilog;
 
 namespace NosCore.Shared.I18N
@@ -57,14 +57,9 @@ namespace NosCore.Shared.I18N
 
         private static int GetWindowWidth()
         {
-            try
-            {
-                return Console.WindowHeight > 0 ? Console.WindowWidth : HeadlessWindowWidth;
-            }
-            catch (IOException)
-            {
-                return HeadlessWindowWidth;
-            }
+            return ConsoleHelper.HasWindowSize && Console.WindowHeight > 0
+                ? Console.WindowWidth
+                : HeadlessWindowWidth;
         }
     }
 }
