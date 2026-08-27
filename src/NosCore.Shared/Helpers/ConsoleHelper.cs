@@ -11,8 +11,10 @@ namespace NosCore.Shared.Helpers
 {
     public static class ConsoleHelper
     {
-        public static bool HasWindowSize =>
-            !Console.IsOutputRedirected || !Console.IsErrorRedirected || !Console.IsInputRedirected;
+        // Console.WindowWidth reads the screen buffer through stdout, then stderr. Its third
+        // try, stdin, cannot answer: a console input handle has no screen buffer, so a process
+        // whose output is piped while stdin is still on the console has no width to read.
+        public static bool HasWindowSize => !Console.IsOutputRedirected || !Console.IsErrorRedirected;
 
         public static void SetTitle(string title)
         {
@@ -30,7 +32,7 @@ namespace NosCore.Shared.Helpers
             }
         }
 
-        private static bool CanCarryTitle => !Console.IsOutputRedirected && GetConsoleWindow() != IntPtr.Zero;
+        public static bool CanCarryTitle => !Console.IsOutputRedirected && GetConsoleWindow() != IntPtr.Zero;
 
         [DllImport("kernel32.dll")]
         private static extern IntPtr GetConsoleWindow();
