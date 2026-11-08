@@ -26,7 +26,7 @@ namespace NosCore.Shared.I18N
             get
             {
                 var localString = _stringLocalizer[key.ToString()];
-                return !string.IsNullOrEmpty(localString.Value) ? localString : new LocalizedString(key.ToString(), $"#<{key}>", true);
+                return Translated(key, localString);
             }
         }
 
@@ -35,9 +35,15 @@ namespace NosCore.Shared.I18N
             get
             {
                 var localString = _stringLocalizer[key.ToString(), arguments];
-                return !string.IsNullOrEmpty(localString.Value) ? localString : new LocalizedString(key.ToString(), $"#<{key}>", true);
+                return Translated(key, localString);
             }
         }
+
+        // IStringLocalizer answers a missing key with the key itself, so ResourceNotFound is what tells it apart.
+        private static LocalizedString Translated(T key, LocalizedString localString) =>
+            !localString.ResourceNotFound && !string.IsNullOrEmpty(localString.Value)
+                ? localString
+                : new LocalizedString(key.ToString(), $"#<{key}>", true);
 
         public IEnumerable<LocalizedString> GetAllStrings() =>
             _stringLocalizer.GetAllStrings(CultureInfo.CurrentUICulture.Equals(new CultureInfo(RegionType.EN.ToString())));

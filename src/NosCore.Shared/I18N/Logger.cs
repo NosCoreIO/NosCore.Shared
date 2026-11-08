@@ -43,7 +43,8 @@ namespace NosCore.Shared.I18N
                 .WriteTo.Console(outputTemplate: "{Message:lj}{NewLine}")
                 .CreateLogger();
             var width = GetWindowWidth();
-            var offset = width / 2 + text?.Length / 2;
+            text ??= string.Empty;
+            var offset = width / 2 + text.Length / 2;
             var separator = new string('=', width - 1);
             titleLogger.Information(separator);
             foreach (var s in AsciiTitle)

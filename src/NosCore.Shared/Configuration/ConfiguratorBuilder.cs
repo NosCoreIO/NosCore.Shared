@@ -20,34 +20,36 @@ namespace NosCore.Shared.Configuration
     {
         private const string ConfigurationPath = "../../configuration";
 
-        private static IConfiguration ReplaceEnvironment<T>(IConfiguration configuration, T strongTypedConfiguration)
+        // ${NAME}, ${NAME,fallback} or ${NAME fallback}. The fallback replaces a variable that is
+        // unset or empty; a placeholder with neither a value nor a fallback is left as written.
+        private static readonly Regex EnvironmentPlaceholder = new(
+            @"\$\{(?<variable>[A-Za-z_][A-Za-z0-9_]*)(?:\s*,\s*(?<fallback>[^}]*)|\s+(?<fallback>[^}]+))?\}",
+            RegexOptions.Compiled);
+
+        private static void ReplaceEnvironment(IConfiguration configuration)
         {
-            var ses = configuration.GetChildren().ToList();
-            for (var index = ses.Count; index > 0; index--)
+            foreach (var section in configuration.GetChildren().ToList())
             {
-                if (ses[index - 1].Value != null)
+                if (section.Value != null)
                 {
-                    var regexp = new Regex(@"\${(?<variable>[a-zA-Z_]+)\s*,?\s*(?<fallback>[^}]+)}");
-                    var matches = regexp.Matches(ses[index - 1].Value ?? "");
-                    foreach (var match in matches.ToList())
+                    section.Value = EnvironmentPlaceholder.Replace(section.Value, match =>
                     {
-                        var value = Environment.GetEnvironmentVariable(match.Groups[1].Value);
-                        if (string.IsNullOrEmpty(value) && (match.Groups.Count > 2) && (match.Groups[2].Value != null))
+                        var value = Environment.GetEnvironmentVariable(match.Groups["variable"].Value);
+                        if (!string.IsNullOrEmpty(value))
                         {
-                            value ??= match.Groups[2].Value;
+                            return value;
                         }
-                        ses[index - 1].Value = regexp.Replace(ses[index - 1].Value ?? "", value!, 1);
-                    }
+
+                        var fallback = match.Groups["fallback"];
+                        return fallback.Success ? fallback.Value : match.Value;
+                    });
                 }
-                else if (ses[index - 1].GetChildren().Any())
+                else
                 {
-                    ReplaceEnvironment(configuration.GetSection(ses[index - 1].Path), configuration).Bind(strongTypedConfiguration);
+                    ReplaceEnvironment(section);
                 }
             }
-
-            return configuration;
         }
-
 
         public static IConfigurationRoot InitializeConfiguration(string[] args, string[] fileNames)
         {
@@ -64,8 +66,8 @@ namespace NosCore.Shared.Configuration
                 conf.AddYamlFile(fileName, false);
             }
             var confBuild = conf.Build();
+            ReplaceEnvironment(confBuild);
             Logger.Initialize(confBuild);
-            ReplaceEnvironment(confBuild, confBuild);
             return confBuild;
         }
     }
