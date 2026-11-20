@@ -8,6 +8,8 @@ namespace NosCore.Shared.Enumerations
 {
     public enum ReputationType : byte
     {
+        // The icon of the first reputation line on entering the game, before the rank is sent.
+        None = 0,
         GreenBeginner = 1,
         BlueBeginner = 2,
         RedBeginner = 3,
